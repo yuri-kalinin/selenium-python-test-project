@@ -52,3 +52,5 @@ Preferences can be changed in `config.yaml`
 
 # Results
 To check the report, open the '/results/report.html' file once the execution has finished.
+
+![ezgif-4-cbb48a4608](https://github.com/yuri-kalinin/selenium-python-test-project/assets/16957236/9483a903-6ecd-4415-9216-c1574aa449ed)
