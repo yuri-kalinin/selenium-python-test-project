@@ -24,7 +24,7 @@ Python, Pytest, Selenium and Page Object Model pattern
 Preferences can be changed in `config.yaml`
 
 # Results
-To check the report, open the '/results/report.html' file once the execution has finished.
+To check the report, open the '/results/report.html' file once the execution has finished
 
 # Showcase
-![ezgif-4-407da36d91](https://github.com/yuri-kalinin/selenium-python-test-project/assets/16957236/6820174c-49fb-4446-83d4-23d31f399b5c)
+![293616770-6820174c-49fb-4446-83d4-23d31f399b5c](https://github.com/yuri-kalinin/selenium-python-test-project/assets/16957236/36aa2109-e1aa-4e1a-a17f-fee519310ff0)
