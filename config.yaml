@@ -1,0 +1,6 @@
+#chrome/firefox
+browser: chrome
+
+url: https://EXAMPLE.com
+username: USERNAME
+password: PASSWORD
