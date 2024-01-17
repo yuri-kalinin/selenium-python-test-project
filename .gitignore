@@ -1,0 +1,17 @@
+# Project
+/results/
+
+# Python
+.venv/*
+*.pyc
+
+# Webdriver
+*.log
+
+# Pytest
+.pytest_cache/
+*.html
+
+# VSCode
+.vscode/
+selenium-python-test-project.code-workspace
