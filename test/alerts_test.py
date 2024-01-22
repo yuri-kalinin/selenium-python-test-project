@@ -22,7 +22,7 @@ class TestSearch(test.TestBase):
         self.page.search_alerts(alert.name)
         alerts = self.page.get_alerts()
 
-        assert len(alerts) == 1, alerts[0].name == alert.name
+        assert len(alerts) == 1 and alerts[0].name == alert.name
 
     def test_valid_data_alert_edit(self, setup):
         self.page = page.Alert(setup)
@@ -44,7 +44,7 @@ class TestSearch(test.TestBase):
         self.page.open_alert_by_index(0)
         alert = self.page.get_alert()
 
-        assert (len(alertsOld) == 0, len(alertsNew) == 1, alert == alertNew)
+        assert len(alertsOld) == 0 and len(alertsNew) == 1 and alert == alertNew
 
     def test_invalid_data_alert_add_fails(self, setup):
         alert = data.Alert(name=data.Input.get_time_str("name"), temperature_from="twenty", temperature_to="forty", send_sms=True, send_email=True, locations=["Office"])
@@ -56,4 +56,4 @@ class TestSearch(test.TestBase):
         errors = self.page.wait_errors()
         alerts = self.page.search_alerts(alert.name)
 
-        assert (len(alerts) == 0, len(errors) == 2, errors[0] == "Alert From is required.", errors[1] == "Alert to is required.")
+        assert len(alerts) == 0 and len(errors) == 2 and errors[0] == "Alert From is required." and errors[1] == "Alert to is required."
