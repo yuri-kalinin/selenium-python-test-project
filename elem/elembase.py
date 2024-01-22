@@ -1,3 +1,4 @@
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions
@@ -22,7 +23,7 @@ class ElemBase(object):
     def is_displayed(self):
         try:
             return self.find().is_displayed()
-        except Exception:
+        except NoSuchElementException:
             return False
 
     def wait_until_displayed(self, visible: bool=True):

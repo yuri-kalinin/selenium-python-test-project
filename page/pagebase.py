@@ -1,3 +1,4 @@
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions
@@ -19,7 +20,7 @@ class PageBase:
         try:
             wait = WebDriverWait(self.driver, timeout)
             wait.until(expected_conditions.visibility_of_element_located((By.CLASS_NAME, "preloader.ng-scope")))
-        except Exception:
+        except TimeoutException:
             pass
         finally:
             self.wait.until(expected_conditions.invisibility_of_element_located((By.CLASS_NAME, "preloader.ng-scope.ng-hide")))

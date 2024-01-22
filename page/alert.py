@@ -70,6 +70,7 @@ class Alert(PageBase):
     def search_alerts(self, value: str):
         self.alert_search.set_value(value)
         self.wait_loading_complete()
+        self.alerts_table.wait_until_contains(value)
         return self.get_alerts()
 
     def open_alert_by_index(self, index: int):

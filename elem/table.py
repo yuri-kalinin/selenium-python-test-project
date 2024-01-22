@@ -1,4 +1,6 @@
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
 from .elembase import ElemBase
 
 class Table(ElemBase):
@@ -10,10 +12,16 @@ class Table(ElemBase):
         try:
             for row in self.find_all():
                 data.append([td.text for td in row.find_elements(By.TAG_NAME, 'td')])
-        except Exception:
+        except StaleElementReferenceException:
             #This is a workaround for the case where the rows get stale
             data.clear()
             for row in self.find_all():
                 data.append([td.text for td in row.find_elements(By.TAG_NAME, 'td')])
         finally:
             return data
+        
+    def wait_until_contains(self, value: str):
+        try:
+            self.wait.until(expected_conditions.text_to_be_present_in_element(self.locator, value))
+        except TimeoutException:
+            pass
