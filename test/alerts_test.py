@@ -5,30 +5,28 @@ import test
 class TestSearch(test.TestBase):
 
     @test.fixture(scope="class", autouse=True)
-    def setup(self):
-        self.page = page.Login(self)
-        self.page.open()
-        assert self.page.is_opened()
+    def page_alert(self):
+        page_login = page.Login(self)
+        page_login.open()
+        assert page_login.is_opened()
 
-        self.page.login(self.config['username'], self.config['password'])
-        return self
+        page_login.login(self.config['username'], self.config['password'])
+        page_alert = page.Alert(self)
+        return page_alert
 
-    def test_valid_data_alert_add(self, setup):
+    def test_valid_data_alert_add(self, page_alert: page.Alert):
         alert = data.Alert(name=data.Input.get_time_str("name"), temperature_from="24", temperature_to="42", send_sms=True, send_email=True, locations=["Office"])
 
-        self.page = page.Alert(setup)
-        self.page.open()
-        self.page.add_alert(alert)
-        self.page.search_alerts(alert.name)
-        alerts = self.page.get_alerts()
+        page_alert.open()
+        page_alert.add_alert(alert)
+        alerts = page_alert.search_alerts(alert.name)
 
         assert len(alerts) == 1 and alerts[0].name == alert.name
 
-    def test_valid_data_alert_edit(self, setup):
-        self.page = page.Alert(setup)
-        self.page.open()
-        self.page.open_alert_by_index(0)
-        alertOld = self.page.get_alert()
+    def test_valid_data_alert_edit(self, page_alert: page.Alert):
+        page_alert.open()
+        page_alert.open_alert_by_index(0)
+        alertOld = page_alert.get_alert()
         alertNew = data.Alert(
             name=data.Input.get_time_str("name"),
             temperature_from="24" if alertOld.temperature_from != "24" else "25",
@@ -38,22 +36,21 @@ class TestSearch(test.TestBase):
             locations=["Office"] #TODO: for now this is the only available valid option
         )
 
-        self.page.edit_alert(alertNew)
-        alertsOld = self.page.search_alerts(alertOld.name)
-        alertsNew = self.page.search_alerts(alertNew.name)
-        self.page.open_alert_by_index(0)
-        alert = self.page.get_alert()
+        page_alert.edit_alert(alertNew)
+        alertsOld = page_alert.search_alerts(alertOld.name)
+        alertsNew = page_alert.search_alerts(alertNew.name)
+        page_alert.open_alert_by_index(0)
+        alert = page_alert.get_alert()
 
         assert len(alertsOld) == 0 and len(alertsNew) == 1 and alert == alertNew
 
-    def test_invalid_data_alert_add_fails(self, setup):
+    def test_invalid_data_alert_add_fails(self, page_alert: page.Alert):
         alert = data.Alert(name=data.Input.get_time_str("name"), temperature_from="twenty", temperature_to="forty", send_sms=True, send_email=True, locations=["Office"])
 
-        self.page = page.Alert(setup)
-        self.page.open()
-        self.page.add_alert(alert)
+        page_alert.open()
+        page_alert.add_alert(alert)
 
-        errors = self.page.wait_errors()
-        alerts = self.page.search_alerts(alert.name)
+        errors = page_alert.wait_errors()
+        alerts = page_alert.search_alerts(alert.name)
 
         assert len(alerts) == 0 and len(errors) == 2 and errors[0] == "Alert From is required." and errors[1] == "Alert to is required."
